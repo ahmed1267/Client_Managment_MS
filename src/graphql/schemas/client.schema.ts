@@ -7,8 +7,8 @@ type Client {
   phone: String
   address: String
   dataLifeTime: Int
-  createdAt: Int!  
-  deletedAt: Int   
+  createdAt: String!  
+  deletedAt: String   
   protectAgainstAutoDisable: Boolean
   maintenanceAppEnabled: Boolean
 }
