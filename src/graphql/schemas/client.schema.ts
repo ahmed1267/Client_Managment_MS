@@ -1,22 +1,23 @@
 export const typeDefs = `#graphql 
 type Client {
   _id: ID!
-  type: String
-  name: String
-  email: String
+  type: String!
+  name: String!
+  email: String!
   phone: String
   address: String
   dataLifeTime: Int
-  createdAt: String!  
+  createdAt: String!
+  updatedAt: String  
   deletedAt: String   
   protectAgainstAutoDisable: Boolean
   maintenanceAppEnabled: Boolean
 }
 
 input ClientInput {
-  type: String
-  name: String
-  email: String
+  type: String!
+  name: String!
+  email: String!
   phone: String
   address: String
   dataLifeTime: Int
@@ -26,9 +27,9 @@ input ClientInput {
 
 input ClientInputWithID {
   _id: ID!
-  type: String
-  name: String
-  email: String
+  type: String!
+  name: String!
+  email: String!
   phone: String
   address: String
   dataLifeTime: Int
