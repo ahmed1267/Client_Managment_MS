@@ -87,7 +87,7 @@ export const resolvers = {
         updateClient: async (_: any, { input }: { input: IClient }): Promise<string> => {
             try {
                 //Email Format Validation
-                if (input.email != null && !EmailValidator.validate(input.email)) {
+                if (input.email != undefined && !EmailValidator.validate(input.email)) {
                     throw new Error("Invalid Email Address!")
                 }
                 const { _id, ...updateData } = input
