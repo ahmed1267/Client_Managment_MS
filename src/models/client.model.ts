@@ -17,11 +17,7 @@ export interface IClient extends mongoose.Document {
 const clientSchema = new mongoose.Schema({
     type: String,
     name: String,
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-    },
+    email: String,
     phone: String,
     address: String,
     dataLifeTime: Number,
