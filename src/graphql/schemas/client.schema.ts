@@ -28,9 +28,9 @@ input ClientInput {
 
 input ClientInputWithID {
   _id: ID!
-  type: String!
-  name: String!
-  email: String!
+  type: String
+  name: String
+  email: String
   phone: String
   address: String
   dataLifeTime: Int
