@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+//Client Interface
 export interface IClient extends mongoose.Document {
     _id: string;
     type: string;
@@ -14,6 +15,7 @@ export interface IClient extends mongoose.Document {
     maintenanceAppEnabled?: boolean;
 }
 
+//Client Mongoose Schema
 const clientSchema = new mongoose.Schema({
     type: String,
     name: String,

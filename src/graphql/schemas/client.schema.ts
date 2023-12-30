@@ -1,3 +1,4 @@
+//Client schema
 export const typeDefs = `#graphql 
 type Client {
   _id: ID!

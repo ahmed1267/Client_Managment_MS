@@ -3,21 +3,26 @@ import * as EmailValidator from 'email-validator'
 
 export const resolvers = {
     Client: {
+        //CreatedAt Date Formatting
         createdAt: (client: any) => {
             return new Date(client.createdAt).toISOString();
         },
+        //UpdatedAt Date Formatting
         updatedAt: (client: any) => {
             return new Date(client?.updatedAt).toISOString() || null;
         }
     },
 
     Query: {
+        //Get One Client By ID
         getOneClient: async (_: any, { _id }: { _id: string }): Promise<IClient | null> => {
             try {
                 const foundClient = await ClientModel.findById(_id).catch(err => {
                     console.log(err)
                     throw new Error('Unexpected error happened while getting the Client!')
                 })
+
+                //If there is no client with the given ID, throw an error.
                 if (!foundClient) {
                     throw new Error("Client Not Found!")
                 }
@@ -28,6 +33,7 @@ export const resolvers = {
             }
         },
 
+        //Get All Clients
         getManyClients: async (): Promise<IClient[] | null> => {
             try {
                 const clients = await ClientModel.find().catch(err => {
@@ -44,11 +50,14 @@ export const resolvers = {
     },
 
     Mutation: {
+        //Create New Client
         createClient: async (_: any, { input }: { input: IClient }): Promise<string> => {
             try {
+                //Email Format Validation
                 if (!EmailValidator.validate(input.email)) {
                     throw new Error("Invalid Email Address!")
                 }
+                //Check if the email already exists in the database.
                 const existingEmail = await ClientModel.findOne({ email: input.email }).catch(err => {
                     {
                         console.log(err)
@@ -58,6 +67,7 @@ export const resolvers = {
                 if (existingEmail) {
                     throw new Error("Email Already Exists!")
                 }
+                //Create a new client and save it to the database.
                 const newClient = new ClientModel(input);
                 await newClient.save().catch(err => {
                     console.log(err)
@@ -73,25 +83,24 @@ export const resolvers = {
             }
         },
 
+        //Update Client By ID
         updateClient: async (_: any, { input }: { input: IClient }): Promise<string> => {
             try {
+                //Email Format Validation
                 if (input.email != null && !EmailValidator.validate(input.email)) {
                     throw new Error("Invalid Email Address!")
                 }
                 const { _id, ...updateData } = input
-                const foundClient = await ClientModel.findById(_id).catch(err => {
+                //Update the client in the database.
+                const foundClient = await ClientModel.findByIdAndUpdate(_id, updateData).catch(err => {
                     console.log(err)
                     throw new Error("Unexpected Error happened while updating the client!");
-
                 })
+
+                //Check if the client exists in the database.
                 if (!foundClient) {
                     throw new Error("Client Not Found!")
                 }
-                await ClientModel.findByIdAndUpdate(_id, updateData).catch(err => {
-                    console.log(err)
-                    throw new Error("Unexpected Error happened while updating the client!");
-                })
-
                 return "Client Updated Successfully!"
             } catch (error) {
                 console.log(error)
