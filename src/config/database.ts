@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
+
 //Environment Variables configuration
 dotenv.config()
 
@@ -16,3 +17,4 @@ const connectDB = async (): Promise<void> => {
 };
 
 export default connectDB;
+

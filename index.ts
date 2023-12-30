@@ -3,9 +3,8 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./src/graphql/schemas/client.schema";
 import connectDB from "./src/config/database";
 import { resolvers } from "./src/graphql/resolvers/client.reslover";
-import dotenv from 'dotenv';
 
-dotenv.config()
+
 connectDB();
 const server = new ApolloServer({
     typeDefs,

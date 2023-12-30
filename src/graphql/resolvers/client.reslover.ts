@@ -7,6 +7,7 @@ export const resolvers = {
         createdAt: (client: any) => {
             return new Date(client.createdAt).toISOString();
         },
+
         //UpdatedAt Date Formatting
         updatedAt: (client: any) => {
             return new Date(client?.updatedAt).toISOString() || null;
@@ -26,10 +27,11 @@ export const resolvers = {
                 if (!updatedClient) {
                     throw new Error("Client Not Found!")
                 }
+
                 return updatedClient;
             } catch (error) {
                 console.log(error)
-                throw new Error("Getting the Client Failed!");
+                throw new Error("Unexpected error happened while getting the Client!");
             }
         },
 
@@ -40,6 +42,7 @@ export const resolvers = {
                     console.log(err)
                     throw new Error('Unexpected error happened while getting Clients!')
                 })
+
                 return clients
             } catch (error) {
                 console.log(error)
@@ -57,6 +60,7 @@ export const resolvers = {
                 if (!EmailValidator.validate(input.email)) {
                     throw new Error("Invalid Email Address!")
                 }
+
                 //Check if the email already exists in the database.
                 const existingEmail = await ClientModel.findOne({ email: input.email }).catch(err => {
                     {
@@ -67,6 +71,7 @@ export const resolvers = {
                 if (existingEmail) {
                     throw new Error("Email Already Exists!")
                 }
+
                 //Create a new client and save it to the database.
                 const newClient = new ClientModel(input);
                 await newClient.save().catch(err => {
@@ -76,6 +81,7 @@ export const resolvers = {
                     else
                         throw new Error("Unexpected Error happened while creating the client!");
                 })
+
                 return "Client Created Successfully!"
             } catch (error) {
                 console.log(error)
@@ -90,7 +96,9 @@ export const resolvers = {
                 if (input.email != undefined && !EmailValidator.validate(input.email)) {
                     throw new Error("Invalid Email Address!")
                 }
+
                 const { _id, ...updateData } = input
+
                 //Update the client in the database.
                 const updatedClient = await ClientModel.findByIdAndUpdate(_id, updateData).catch(err => {
                     console.log(err)
@@ -101,6 +109,7 @@ export const resolvers = {
                 if (!updatedClient) {
                     throw new Error("Client Not Found!")
                 }
+
                 return "Client Updated Successfully!"
             } catch (error) {
                 console.log(error)
