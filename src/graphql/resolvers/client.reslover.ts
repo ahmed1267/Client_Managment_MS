@@ -17,16 +17,16 @@ export const resolvers = {
         //Get One Client By ID
         getOneClient: async (_: any, { _id }: { _id: string }): Promise<IClient | null> => {
             try {
-                const foundClient = await ClientModel.findById(_id).catch(err => {
+                const updatedClient = await ClientModel.findById(_id).catch(err => {
                     console.log(err)
                     throw new Error('Unexpected error happened while getting the Client!')
                 })
 
                 //If there is no client with the given ID, throw an error.
-                if (!foundClient) {
+                if (!updatedClient) {
                     throw new Error("Client Not Found!")
                 }
-                return foundClient;
+                return updatedClient;
             } catch (error) {
                 console.log(error)
                 throw new Error("Getting the Client Failed!");
@@ -92,13 +92,13 @@ export const resolvers = {
                 }
                 const { _id, ...updateData } = input
                 //Update the client in the database.
-                const foundClient = await ClientModel.findByIdAndUpdate(_id, updateData).catch(err => {
+                const updatedClient = await ClientModel.findByIdAndUpdate(_id, updateData).catch(err => {
                     console.log(err)
                     throw new Error("Unexpected Error happened while updating the client!");
                 })
 
                 //Check if the client exists in the database.
-                if (!foundClient) {
+                if (!updatedClient) {
                     throw new Error("Client Not Found!")
                 }
                 return "Client Updated Successfully!"
