@@ -8,7 +8,9 @@ dotenv.config()
 //MongoDB connection function
 const connectDB = async (): Promise<void> => {
   try {
-    await mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.fvqxbu9.mongodb.net/`);
+    const connString = `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@mongodb`;
+    console.log(connString);
+    await mongoose.connect(connString);
     console.log('MongoDB connected successfully');
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
